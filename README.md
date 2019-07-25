@@ -1,3 +1,16 @@
+# Weather App
+
+This app was created to learn React.js and is my second project with the library (not including tutorials and a book). The app pulls weather data from OpenWeatherMap.org. This was also my first project to use componentDidMount (lifecycle method) and state to store AJAX/JSON requests. Also did some fancy mapping with Array.map() and other little details.
+
+## Todo
+* Implement buttons with event listeners to change from daily to 3 hour forecasts
+* Implement input of custom city name or ZIP code
+
+## Possible
+* Could implement barometric readings for those interested in that
+
+# Create React App Documentation
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
