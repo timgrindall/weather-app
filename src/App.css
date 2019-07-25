@@ -1,33 +1,79 @@
-.App {
+.container {
+  font-size: 1em;
+  width: auto;
+  height: auto;
+  /*background-color: lightgrey;*/
+}
+
+.city-name {
+  font-size: 1.5em;
   text-align: center;
+  margin: 20px;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.current-container {
+  margin: auto;
+  width: auto;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.current-icon {
+  height: 60px;
+  width: 60px;
+  display: inline-block;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.current-weather {
+  height: 60px;
+  line-height: 60px;
+  font-size: 2em;
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 10px;
+}
+
+.cards {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+.card {
+  width: 100px;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: #f3f3f3;
+}
+
+.day-name {
+  text-align: center;
+  color: black;
+}
+
+.weather-icon {
+  height: auto;
+  width: 60px;
+  margin: 12.5px;
+}
+
+.temps {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.day-temp {
+  color: black;
+}
+
+.night-temp {
+  color: grey;
+}
+
+.icon-credit {
+  text-align: center;
 }

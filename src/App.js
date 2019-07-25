@@ -1,26 +1,69 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Card from './Card.js';
+// import conditionsDict from './conditions-dict.js';
+// import ajax from './ajax.js';
+
+import CurrentWeather from './CurrentWeather.js';
+
+const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
+const hourNames = ["12 am", "3 am", " 6 am", "9 am", "12 pm", "3 pm", "6 pm", "9 pm"];
+const APIKey = '8ae490945f36f5acd76d8e89a153d64a';
+const ID = '5809844';
+const cnt = 8;
+
+class App extends Component {
+  constructor (props) {
+    super(props);
+    this.state = {
+      isLoaded: false,
+      data: null,
+      error: false
+    };
+  }
+
+  componentDidMount() {
+    window.fetch('http://api.openweathermap.org/data/2.5/forecast?id=' + ID + '&units=Imperial&cnt=' + cnt + '&APPID=' + APIKey)
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.setState({isLoaded: true, data: result});
+        },
+        (error) => {
+          this.setState({isLoaded: true, error});
+          console.log("Error: " + error);
+        }
+      );
+  }
+
+  render() {
+    const {isLoaded, data, error} = this.state;
+
+    if (error) {
+      console.log(data);
+      return <div className="errorMessage">Error: {error.message}</div>
+    } else if (!isLoaded) {
+      console.log(data);
+      return <div className="errorMessage">Loading . . .</div>
+    } else {
+      // test data object
+      console.log(data);
+
+      //process items/list
+      const cardsList = data.list.map((day, index) => {
+        return <Card key={index} dayName={hourNames[index]} conditionID={day.weather[0].id} description={day.description} dayTemp={day.main.temp_max} nightTemp={day.main.temp_min} />
+      })
+
+      return (
+        <div className="container">
+          <CurrentWeather ID={ID} APIKey={APIKey}/>
+          <div className="cards">{cardsList}</div>
+          <div className="icon-credit">Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"                 title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"                 title="Creative Commons BY 3.0" rel="noopener noreferrer" target="_blank">CC 3.0 BY</a></div>
+        </div>
+      );
+    }
+  }
 }
 
 export default App;

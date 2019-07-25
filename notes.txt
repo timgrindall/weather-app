@@ -1,0 +1,5 @@
+Notes:
+  -Could implement barometer for those interested in that
+  -Could implement input of custom city name or zip code
+  -Implement AJAX/JSON request for current weather
+  -Get real UTC time from data (data.list[index].dt)
