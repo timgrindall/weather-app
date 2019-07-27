@@ -1,5 +1,7 @@
 Notes:
-  -Could implement barometer for those interested in that
+  X-Could implement barometer for those interested in that
   -Could implement input of custom city name or zip code
-  -Implement AJAX/JSON request for current weather
-  -Get real UTC time from data (data.list[index].dt)
+  X-Implement AJAX/JSON request for current weather
+  X-Get real UTC time from data (data.list[index].dt)
+  N/A-Implement daily forecast and button for switching between daily and 3-hour forecasts
+  -Implement tooltips for icons showing description

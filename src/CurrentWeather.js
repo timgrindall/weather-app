@@ -32,20 +32,20 @@ class CurrentWeather extends Component {
     const {isLoaded, data, error} = this.state;
 
     if (error) {
-      console.log(data);
+      // console.log(data);
       return <div className="errorMessage">Error: {error.message}</div>
     } else if (!isLoaded) {
-      console.log(data);
+      // console.log(data);
       return <div className="errorMessage">Loading . . .</div>
     } else {
       // test data object
-      console.log(data);
+      // console.log(data);
 
-      const id = this.state.data.weather[0].id;
-      const name = this.state.data.name;
+      const id = data.weather[0].id;
+      const name = data.name;
       const iconURL = conditionsDict[id].iconURL;
-      const description = this.state.data.weather[0].description;
-      const currentTemp = Math.round(this.state.data.main.temp);
+      const description = data.weather[0].description;
+      const currentTemp = Math.round(data.main.temp);
 
       //render
       return (
