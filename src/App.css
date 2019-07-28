@@ -85,3 +85,12 @@
 .pressure {
   color: grey;
 }
+
+.city-label {
+  margin: 10px;
+}
+
+.city-form {
+  width: 395px;
+  margin: auto;
+}

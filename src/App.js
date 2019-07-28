@@ -2,10 +2,8 @@ import React, {Component} from 'react';
 import './App.css';
 
 import Card from './Card.js';
-// import conditionsDict from './conditions-dict.js';
-// import ajax from './ajax.js';
-
 import CurrentWeather from './CurrentWeather.js';
+import CityInput from './CityInput.js';
 
 // const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
 // const hourNames = ["12 am", "3 am", " 6 am", "9 am", "12 pm", "3 pm", "6 pm", "9 pm"];
@@ -21,12 +19,15 @@ class App extends Component {
     this.state = {
       isLoaded: false,
       data: null,
-      error: false
+      error: false,
+      city: 'Seattle'
     };
+
+    this.onSubmitForm = this.onSubmitForm.bind(this);
   }
 
   componentDidMount() {
-    window.fetch('http://api.openweathermap.org/data/2.5/forecast?id=' + ID + '&units=Imperial&cnt=' + cnt + '&APPID=' + APIKey)
+    window.fetch('http://api.openweathermap.org/data/2.5/forecast?q=' + this.state.city + ',us&units=Imperial&cnt=' + cnt + '&APPID=' + APIKey)
       .then(res => res.json())
       .then(
         (result) => {
@@ -37,6 +38,11 @@ class App extends Component {
           console.log("Error: " + error);
         }
       );
+  }
+
+  onSubmitForm(cityName) {
+    this.setState({city: cityName});
+    console.log("form submit: " + cityName)
   }
 
   render() {
@@ -73,8 +79,9 @@ class App extends Component {
 
       return (
         <div className="container">
-          <CurrentWeather ID={ID} APIKey={APIKey}/>
+          <CurrentWeather ID={ID} cityName={this.state.city} APIKey={APIKey}/>
           <div className="cards">{cardsList}</div>
+          <CityInput cityName={this.state.city} onSubmitForm={this.onSubmitForm()}/>
           <div className="icon-credit">Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"                 title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"                 title="Creative Commons BY 3.0" rel="noopener noreferrer" target="_blank">CC 3.0 BY</a></div>
         </div>
       );

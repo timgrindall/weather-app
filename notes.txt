@@ -5,3 +5,4 @@ Notes:
   X-Get real UTC time from data (data.list[index].dt)
   N/A-Implement daily forecast and button for switching between daily and 3-hour forecasts
   -Implement tooltips for icons showing description
+  -change implementation of tooltip to provide seperate info for icon (description), and pressure reading (kPa)

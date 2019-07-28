@@ -15,7 +15,7 @@ class CurrentWeather extends Component {
 	}
 
   componentDidMount() {
-    window.fetch('http://api.openweathermap.org/data/2.5/weather?id=' + this.props.ID + '&units=Imperial&APPID=' + this.props.APIKey)
+    window.fetch('http://api.openweathermap.org/data/2.5/weather?q=' + this.props.cityName + ',us&units=Imperial&APPID=' + this.props.APIKey)
       .then(res => res.json())
       .then(
         (result) => {
