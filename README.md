@@ -5,13 +5,13 @@ This app was created to learn React.js and is my second project with the library
 This was also my first project to use componentDidMount (lifecycle method) and state to store AJAX/JSON requests. Also did some fancy mapping with Array.map() and other little details.
 
 ## Todo
-* Implement buttons with event listeners to change from daily to 3 hour forecasts
 * Implement input of custom city name or ZIP code
 * Fix flickering bug with tooltips
 * Fix infinite loop bug with city name input form
 
 ## Possible
 * ~~Could implement barometric readings for those interested in that~~
+* Implement buttons with event listeners to change from daily to 3 hour forecasts
 
 # Create React App Documentation
 
