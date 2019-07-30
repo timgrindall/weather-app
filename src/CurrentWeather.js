@@ -29,9 +29,9 @@ class CurrentWeather extends Component {
       );
   }
 
-// had to take this out to stop an infinite loop of requests but may need it to update component
-  componentDidUpdate() {
-    if (this.state.loadAgain === true && this.state.data.cod !== 429) window.fetch('http://api.openweathermap.org/data/2.5/weather?q=' + this.props.cityName + ',us&units=Imperial&APPID=' + this.props.APIKey)
+// had to take this function out to stop an infinite loop of requests
+  componentDidUpdate(prevProps) {
+    if (this.props.cityName !== prevProps.cityName) window.fetch('http://api.openweathermap.org/data/2.5/weather?q=' + this.props.cityName + ',us&units=Imperial&APPID=' + this.props.APIKey)
       .then(res => res.json())
       .then(
         (result) => {
@@ -65,6 +65,12 @@ class CurrentWeather extends Component {
     } else if (!isLoaded) {
       // console.log(data);
       return <div className="errorMessage">Loading . . .</div>
+    } else if (data.cod != 200) {
+      var message = "unknown";
+      console.log('isLoaded: ' + isLoaded)
+      console.log('error: ' + error)
+      console.log('cod: ' + data.cod)
+      return <div className="errorMessage">Error: code {data.cod} {data.message}. {(data.cod == 404)?"Please refresh the page to try again":""}</div>
     } else {
       // test data object
       // console.log(data);

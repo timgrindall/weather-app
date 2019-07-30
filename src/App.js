@@ -18,7 +18,6 @@ class App extends Component {
     super(props);
     this.state = {
       isLoaded: false,
-      loadedOnce: false,
       loadAgain: false,
       data: null,
       error: false,
@@ -33,7 +32,7 @@ class App extends Component {
       .then(res => res.json())
       .then(
         (result) => {
-          this.setState({isLoaded: true, loadedOnce: true, data: result});
+          this.setState({isLoaded: true, data: result});
         },
         (error) => {
           this.setState({isLoaded: false, error});
@@ -44,7 +43,7 @@ class App extends Component {
 
 // had to take this out to stop an infinite loop of requests but may need it to update component
   componentDidUpdate() {
-    if (this.state.loadAgain === true && this.state.data.cod !== 429) window.fetch('http://api.openweathermap.org/data/2.5/forecast?q=' + this.state.city + ',us&units=Imperial&cnt=' + cnt + '&APPID=' + APIKey)
+    if (this.state.loadAgain === true) window.fetch('http://api.openweathermap.org/data/2.5/forecast?q=' + this.state.city + ',us&units=Imperial&cnt=' + cnt + '&APPID=' + APIKey)
       .then(res => res.json())
       .then(
         (result) => {
@@ -82,8 +81,7 @@ class App extends Component {
       console.log('isLoaded: ' + isLoaded)
       console.log('error: ' + error)
       console.log('cod: ' + data.cod)
-      if (data.cod == 429) message = "Too many requests"
-      return <div className="errorMessage">Error: code {data.cod} {message} <br />{data.message}</div>
+      return <div className="errorMessage">Error: code {data.cod} {data.message}. {(data.cod == 404)?"Please refresh the page to try again":""}</div>
     } else {
       console.log('isLoaded: ' + isLoaded)
       console.log('error: ' + error)
