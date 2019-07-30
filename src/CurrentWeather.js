@@ -8,6 +8,7 @@ class CurrentWeather extends Component {
 		super(props);
     this.state = {
       isLoaded: false,
+      loadAgain: true,
       data: null,
       error: false
     };
@@ -26,6 +27,33 @@ class CurrentWeather extends Component {
           console.log("Error: " + error);
         }
       );
+  }
+
+// had to take this out to stop an infinite loop of requests but may need it to update component
+  componentDidUpdate() {
+    if (this.state.loadAgain === true && this.state.data.cod !== 429) window.fetch('http://api.openweathermap.org/data/2.5/weather?q=' + this.props.cityName + ',us&units=Imperial&APPID=' + this.props.APIKey)
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.setState({isLoaded: true, loadAgain: false, data: result});
+          console.log('loaded current weather')
+          console.log('this.props.cityName: ' + this.props.cityName)
+        },
+        (error) => {
+          this.setState({isLoaded: false, loadAgain: false, error});
+          console.log("Error: " + error);
+          console.log('loaded current weather')
+          console.log('this.props.cityName: ' + this.props.cityName)
+          console.log(error)
+        }
+      );
+    else {
+      console.log('tried to load currentWeather')
+      console.log('cod: ' + this.state.data.cod)
+      console.log('data: ')
+      console.log(this.state.data)
+      console.log('this.props.cityName: ' + this.props.cityName)
+    }
   }
 
   render() {

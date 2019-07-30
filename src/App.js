@@ -18,6 +18,8 @@ class App extends Component {
     super(props);
     this.state = {
       isLoaded: false,
+      loadedOnce: false,
+      loadAgain: false,
       data: null,
       error: false,
       city: 'Seattle'
@@ -31,34 +33,61 @@ class App extends Component {
       .then(res => res.json())
       .then(
         (result) => {
-          this.setState({isLoaded: true, data: result});
+          this.setState({isLoaded: true, loadedOnce: true, data: result});
         },
         (error) => {
-          this.setState({isLoaded: true, error});
+          this.setState({isLoaded: false, error});
           console.log("Error: " + error);
         }
       );
   }
 
+// had to take this out to stop an infinite loop of requests but may need it to update component
+  componentDidUpdate() {
+    if (this.state.loadAgain === true && this.state.data.cod !== 429) window.fetch('http://api.openweathermap.org/data/2.5/forecast?q=' + this.state.city + ',us&units=Imperial&cnt=' + cnt + '&APPID=' + APIKey)
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.setState({isLoaded: true, loadAgain: false, data: result});
+        },
+        (error) => {
+          this.setState({isLoaded: false, loadAgain: false, error});
+          console.log("Error: " + error);
+        }
+      );
+    else {
+      console.log('tried to load forecast')
+      console.log('cod: ' + this.state.data.cod)
+    }
+  }
+
+
   onSubmitForm(cityName) {
-    this.setState({city: cityName});
     console.log("form submit: " + cityName)
+    this.setState({city: cityName, loadAgain: true});
+
   }
 
   render() {
     const {isLoaded, data, error} = this.state;
 
     if (error) {
-      // console.log(data);
       return <div className="errorMessage">Error: {error.message}</div>
     } else if (!isLoaded) {
-      // console.log(data);
+      console.log('isLoaded: ' + isLoaded)
+      console.log('error: ' + error)
       return <div className="errorMessage">Loading . . .</div>
+    } else if (data.cod != 200) {
+      var message = "unknown";
+      console.log('isLoaded: ' + isLoaded)
+      console.log('error: ' + error)
+      console.log('cod: ' + data.cod)
+      if (data.cod == 429) message = "Too many requests"
+      return <div className="errorMessage">Error: code {data.cod} {message} <br />{data.message}</div>
     } else {
-      // test data object
-      // console.log(data);
+      console.log('isLoaded: ' + isLoaded)
+      console.log('error: ' + error)
       const timezone = data.city.timezone;
-      // console.log(timezone)
 
       //process items/list
       const cardsList = data.list.map((day, index) => {
@@ -81,7 +110,7 @@ class App extends Component {
         <div className="container">
           <CurrentWeather ID={ID} cityName={this.state.city} APIKey={APIKey}/>
           <div className="cards">{cardsList}</div>
-          <CityInput cityName={this.state.city} onSubmitForm={this.onSubmitForm()}/>
+          <CityInput cityName={this.state.city} onSubmitForm={this.onSubmitForm}/>
           <div className="icon-credit">Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"                 title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"                 title="Creative Commons BY 3.0" rel="noopener noreferrer" target="_blank">CC 3.0 BY</a></div>
         </div>
       );
