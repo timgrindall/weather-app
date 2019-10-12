@@ -77,7 +77,6 @@ class App extends Component {
       console.log('error: ' + error)
       return <div className="errorMessage">Loading . . .</div>
     } else if (data.cod != 200) {
-      var message = "unknown";
       console.log('isLoaded: ' + isLoaded)
       console.log('error: ' + error)
       console.log('cod: ' + data.cod)

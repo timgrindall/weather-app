@@ -66,7 +66,6 @@ class CurrentWeather extends Component {
       // console.log(data);
       return <div className="errorMessage">Loading . . .</div>
     } else if (data.cod != 200) {
-      var message = "unknown";
       console.log('isLoaded: ' + isLoaded)
       console.log('error: ' + error)
       console.log('cod: ' + data.cod)

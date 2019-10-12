@@ -94,3 +94,9 @@
   width: 395px;
   margin: auto;
 }
+
+.city-form-submit {
+  width: 100px;
+  margin: auto;
+  display: block;
+}

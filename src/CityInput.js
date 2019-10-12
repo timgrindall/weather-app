@@ -29,7 +29,7 @@ class CityInput extends Component {
       <form onSubmit={this.submitForm} className="city-form">
         <label className="city-label">Enter City Name:</label>
         <input type="text" value={cityName} onChange={this.updateCity}/>
-        <input type="submit" value="Submit" />
+        <input class="city-form-submit" type="submit" value="Submit" />
       </form>
     );
   }
